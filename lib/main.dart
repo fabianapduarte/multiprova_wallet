@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multiprova_wallet/models/theme.dart';
-import 'package:multiprova_wallet/screens/home.dart';
+import 'package:multiprova_wallet/screens/login.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,7 +21,7 @@ class MultiprovaWallet extends StatelessWidget {
         themeMode: theme.themeMode,
         theme: theme.lightThemeData(context),
         darkTheme: theme.darkThemeData(context),
-        home: Home(),
+        home: Login(),
       );
     });
   }

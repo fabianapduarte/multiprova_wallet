@@ -12,7 +12,6 @@ class Display extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
         title: title,
-        titleTextStyle: Theme.of(context).textTheme.titleLarge,
         shape: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.onBackground, width: 1)),
       ),
       body: body,
