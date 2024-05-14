@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:multiprova_wallet/enum/enum_theme_app.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
 
 class ThemeModel extends ChangeNotifier {
-  ThemeApp _theme = ThemeApp.light;
+  ThemeMode _theme = ThemeMode.dark;
 
-  ThemeMode get themeMode => _theme.themeMode;
+  ThemeMode get themeMode => _theme;
 
-  void handleTheme(ThemeApp newTheme) {
+  void handleTheme(ThemeMode newTheme) {
     _theme = newTheme;
     notifyListeners();
   }
@@ -22,18 +21,19 @@ class ThemeModel extends ChangeNotifier {
         onBackground: grayLight,
         error: red,
         outline: blueLight,
-        surface: blue,
-        onSurface: white,
+        surface: blueLight,
+        onSurface: gray,
       ),
       textTheme: TextTheme(
         bodyLarge: TextStyle(fontSize: 18, color: gray),
         bodyMedium: TextStyle(fontSize: 16, color: gray),
         bodySmall: TextStyle(fontSize: 14, color: gray),
-        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: blue),
+        headlineLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.w700, color: blue),
+        headlineMedium: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: blue),
         titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: gray),
         titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: gray),
         titleSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: gray),
-        labelMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        labelMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: white),
       ),
     );
   }
@@ -55,11 +55,12 @@ class ThemeModel extends ChangeNotifier {
         bodyLarge: TextStyle(fontSize: 18, color: white),
         bodyMedium: TextStyle(fontSize: 16, color: white),
         bodySmall: TextStyle(fontSize: 14, color: white),
-        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: white),
+        headlineLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.w700, color: white),
+        headlineMedium: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: white),
         titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: white),
         titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: white),
         titleSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: white),
-        labelMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        labelMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: white),
       ),
     );
   }
