@@ -16,7 +16,7 @@ class ThemeModel extends ChangeNotifier {
       useMaterial3: true,
       colorScheme: ColorScheme.light(
         primary: blue,
-        onPrimary: white,
+        onPrimary: blue,
         background: white,
         onBackground: grayLight,
         error: red,
@@ -24,6 +24,7 @@ class ThemeModel extends ChangeNotifier {
         surface: blueLight,
         onSurface: gray,
       ),
+      dialogBackgroundColor: white,
       textTheme: TextTheme(
         bodyLarge: TextStyle(fontSize: 18, color: gray),
         bodyMedium: TextStyle(fontSize: 16, color: gray),
@@ -51,6 +52,7 @@ class ThemeModel extends ChangeNotifier {
         surface: grayDark,
         onSurface: white,
       ),
+      dialogBackgroundColor: grayDark,
       textTheme: TextTheme(
         bodyLarge: TextStyle(fontSize: 18, color: white),
         bodyMedium: TextStyle(fontSize: 16, color: white),

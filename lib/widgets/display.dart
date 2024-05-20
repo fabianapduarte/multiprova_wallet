@@ -47,7 +47,9 @@ class Display extends StatelessWidget {
         ],
         forceMaterialTransparency: true,
       ),
-      body: body,
+      body: SingleChildScrollView(
+        child: body,
+      ),
     );
   }
 }

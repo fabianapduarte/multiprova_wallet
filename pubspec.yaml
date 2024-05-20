@@ -64,6 +64,10 @@ flutter:
   assets:
     - assets/illustration_login.svg
     - assets/metamask_logo.png
+    - assets/icon_receive.png
+    - assets/icon_send.png
+    - assets/icon_swap.png
+    - assets/icon_how_earn.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
