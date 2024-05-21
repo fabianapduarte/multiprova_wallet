@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
 import 'package:multiprova_wallet/widgets/button_home.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
@@ -110,114 +111,112 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Display(
+      screenActive: NavigationBarActions.home,
       title: Logo(
         alignment: MainAxisAlignment.start,
         fontSize: 22.0,
         iconSize: 26.0,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              getInfoCard(70, 'MultiprovaCoin'),
+              getInfoCard(50, 'MultiprovaToken'),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
+            child: Text('Bombas', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              getBombCard(2, 'Múltipla Escolha'),
+              getBombCard(3, 'Assoc. Colunas'),
+              getBombCard(3, 'V ou F'),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
+            child: Text('Ações', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              ButtonHome(
+                label: 'Receber',
+                srcIcon: 'icon_receive.png',
+                onPressed: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => Modal(
+                    title: 'Receber',
+                    textBody:
+                        'Seu endereço:\n0x00b58369796dd223f025315d0a8a8a872517d51d\n\nReceba tokens de outra pessoa através do endereço da sua conta.',
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          await Clipboard.setData(
+                            ClipboardData(text: "0x00b58369796dd223f025315d0a8a8a872517d51d"),
+                          ).then((value) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(Snackbar(text: 'Endereço copiado!').build(context));
+                            Navigator.pop(context);
+                          });
+                        },
+                        child: Text('Compartilhar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ButtonHome(label: 'Enviar', srcIcon: 'icon_send.png', onPressed: () {}),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 16.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                getInfoCard(70, 'MultiprovaCoin'),
-                getInfoCard(50, 'MultiprovaToken'),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-              child: Text('Bombas', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                getBombCard(2, 'Múltipla Escolha'),
-                getBombCard(3, 'Assoc. Colunas'),
-                getBombCard(3, 'V ou F'),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-              child: Text('Ações', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+                ButtonHome(label: 'Swap', srcIcon: 'icon_swap.png', onPressed: () {}),
                 ButtonHome(
-                  label: 'Receber',
-                  srcIcon: 'icon_receive.png',
+                  label: 'Como ganhar',
+                  srcIcon: 'icon_how_earn.png',
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => Modal(
-                      title: 'Receber',
+                      title: 'Como ganhar',
                       textBody:
-                          'Seu endereço:\n0x00b58369796dd223f025315d0a8a8a872517d51d\n\nReceba tokens de outra pessoa através do endereço da sua conta.',
+                          'Responda questões corretamente em provas feitas exclusivamente no Multiprova e consiga MultiprovaTokens. Troque seus MultiprovaTokens por MultiprovaCoin e utilize como achar melhor.\n\nObs.: Seu professor DEVE ativar essa funcionalidade para que seja possível receber os tokens.',
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            await Clipboard.setData(
-                              ClipboardData(text: "0x00b58369796dd223f025315d0a8a8a872517d51d"),
-                            ).then((value) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(Snackbar(text: 'Endereço copiado!').build(context));
-                              Navigator.pop(context);
-                            });
-                          },
-                          child: Text('Compartilhar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-                        ),
+                        )
                       ],
                     ),
                   ),
                 ),
-                ButtonHome(label: 'Enviar', srcIcon: 'icon_send.png', onPressed: () {}),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  ButtonHome(label: 'Swap', srcIcon: 'icon_swap.png', onPressed: () {}),
-                  ButtonHome(
-                    label: 'Como ganhar',
-                    srcIcon: 'icon_how_earn.png',
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => Modal(
-                        title: 'Como ganhar',
-                        textBody:
-                            'Responda questões corretamente em provas feitas exclusivamente no Multiprova e consiga MultiprovaTokens. Troque seus MultiprovaTokens por MultiprovaCoin e utilize como achar melhor.\n\nObs.: Seu professor DEVE ativar essa funcionalidade para que seja possível receber os tokens.',
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-              child: Text('Cotação diária', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
-            ),
-            Column(
-              children: <Widget>[
-                getQuotationCard('MultiprovaCoin', 2.5, 2.455, 'MTC 50'),
-                getQuotationCard('Ethereum', -0.32, 16458.37, 'ETH 1,00014'),
-              ],
-            ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
+            child: Text('Cotação diária', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
+          ),
+          Column(
+            children: <Widget>[
+              getQuotationCard('MultiprovaCoin', 2.5, 2.455, 'MTC 50'),
+              getQuotationCard('Ethereum', -0.32, 16458.37, 'ETH 1,00014'),
+            ],
+          ),
+        ],
       ),
     );
   }
