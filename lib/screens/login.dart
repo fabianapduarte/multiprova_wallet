@@ -122,12 +122,7 @@ class _LoginState extends State<Login> {
                       width: 24.0,
                       fit: BoxFit.cover,
                     ),
-                    onPressed: () {
-                      // Navigator.pop(context);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const Home()),
-                      // );
+                    onPressed: () { 
                       _w3mService.openModal(context);
                     },
                   ),

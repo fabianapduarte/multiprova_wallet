@@ -11,19 +11,16 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
-        )),
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12.0)),
-      ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          )),
+          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12.0)),
+          backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary)),
       onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 8),
-            child: icon,
-          ),
+          Container(child: icon),
           Text(label, style: Theme.of(context).textTheme.labelMedium),
         ],
       ),
