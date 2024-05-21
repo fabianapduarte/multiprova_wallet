@@ -3,4 +3,5 @@ enum NavigationBarActions {
   store,
   swap,
   history,
+  none,
 }

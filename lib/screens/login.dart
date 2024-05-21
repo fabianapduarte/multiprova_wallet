@@ -45,11 +45,14 @@ class Login extends StatelessWidget {
                 ),
                 Button(
                   label: 'Login com MetaMask',
-                  icon: Image.asset(
-                    'assets/metamask_logo.png',
-                    height: 24.0,
-                    width: 24.0,
-                    fit: BoxFit.cover,
+                  icon: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Image.asset(
+                      'assets/metamask_logo.png',
+                      height: 24.0,
+                      width: 24.0,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);

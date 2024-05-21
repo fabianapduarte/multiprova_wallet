@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/models/theme.dart';
 import 'package:multiprova_wallet/screens/login.dart';
@@ -6,11 +7,18 @@ import 'package:multiprova_wallet/widgets/navigation_bottom_bar.dart';
 import 'package:provider/provider.dart';
 
 class Display extends StatelessWidget {
-  const Display({super.key, required this.title, required this.body, required this.screenActive});
+  const Display({
+    super.key,
+    required this.title,
+    required this.body,
+    required this.screenActive,
+    required this.automaticallyImplyLeading,
+  });
 
   final Widget title;
   final Widget body;
   final NavigationBarActions screenActive;
+  final bool automaticallyImplyLeading;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +57,7 @@ class Display extends StatelessWidget {
           ),
         ],
         forceMaterialTransparency: true,
+        automaticallyImplyLeading: automaticallyImplyLeading,
       ),
       body: SingleChildScrollView(
         child: Padding(

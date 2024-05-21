@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
       child: CardOutlined(
-        width: (MediaQuery.sizeOf(context).width) - 64,
+        width: double.maxFinite,
         body: Row(
           children: <Widget>[
             Container(
@@ -111,6 +111,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Display(
+      automaticallyImplyLeading: false,
       screenActive: NavigationBarActions.home,
       title: Logo(
         alignment: MainAxisAlignment.start,

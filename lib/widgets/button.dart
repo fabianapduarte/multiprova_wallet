@@ -20,10 +20,7 @@ class Button extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 8),
-            child: icon,
-          ),
+          Container(child: icon),
           Text(label, style: Theme.of(context).textTheme.labelMedium),
         ],
       ),

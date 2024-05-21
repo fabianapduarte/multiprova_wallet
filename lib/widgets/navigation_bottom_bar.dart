@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/screens/home.dart';
+import 'package:multiprova_wallet/screens/store.dart';
 
 class NavigationBottomBar extends StatelessWidget {
   const NavigationBottomBar({super.key, required this.screenActive});
@@ -41,7 +42,12 @@ class NavigationBottomBar extends StatelessWidget {
             iconSize: 28.0,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Store()),
+              );
+            },
             icon: Icon(Icons.store_rounded),
             color: iconColor(context, screenActive == NavigationBarActions.store),
             iconSize: 28.0,
