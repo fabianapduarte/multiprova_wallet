@@ -18,37 +18,29 @@ class Store extends StatelessWidget {
     String description,
   ) {
     String priceString = price.toStringAsFixed(2).replaceAll('.', ',');
-    IconData? icon;
+    IconData icon;
 
     if (productType == ProductType.bomb) {
       icon = FontAwesomeIcons.bomb;
-    } else if (productType == ProductType.giftCard) {
-      icon = Icons.card_giftcard_rounded;
     } else {
-      icon = null;
+      icon = Icons.card_giftcard_rounded;
     }
 
     return CardOutlined(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Icon(icon),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        productName,
-                        style: Theme.of(context).textTheme.titleMedium,
-                        softWrap: true,
-                      ),
-                    ),
-                  ],
+              Padding(padding: EdgeInsets.only(right: 10.0), child: Icon(icon)),
+              Expanded(
+                child: Text(
+                  productName,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  softWrap: true,
+                  maxLines: 2,
                 ),
               ),
             ],
@@ -63,12 +55,10 @@ class Store extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
-            child: Expanded(
-              child: Text(
-                description,
-                style: Theme.of(context).textTheme.bodyMedium,
-                softWrap: true,
-              ),
+            child: Text(
+              description,
+              style: Theme.of(context).textTheme.bodyMedium,
+              softWrap: true,
             ),
           ),
           Row(
