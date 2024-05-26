@@ -6,6 +6,8 @@ import 'package:multiprova_wallet/widgets/card.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
 import 'package:multiprova_wallet/widgets/display.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:multiprova_wallet/widgets/modal.dart';
+import 'package:multiprova_wallet/widgets/snackbar.dart';
 
 class Store extends StatelessWidget {
   const Store({super.key});
@@ -34,7 +36,12 @@ class Store extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(right: 10.0), child: Icon(icon)),
+              Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Icon(
+                    icon,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  )),
               Expanded(
                 child: Text(
                   productName,
@@ -64,7 +71,30 @@ class Store extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Button(label: 'Comprar', onPressed: () {}),
+              Button(
+                label: 'Comprar',
+                onPressed: () => showDialog<Widget>(
+                  context: context,
+                  builder: (BuildContext context) => Modal(
+                    title: 'Deseja continuar?',
+                    textBody: 'Deseja comprar 1 $productName por MC $priceString?',
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Cancelar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(Snackbar(text: 'Compra realizada com sucesso').build(context));
+                          Navigator.pop(context);
+                        },
+                        child: Text('Comprar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ],
