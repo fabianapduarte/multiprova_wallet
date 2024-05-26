@@ -3,9 +3,77 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:multiprova_wallet/screens/home.dart';
 import 'package:multiprova_wallet/widgets/button.dart';
 import 'package:multiprova_wallet/widgets/logo.dart';
+import 'package:web3modal_flutter/web3modal_flutter.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  late W3MService _w3mService;
+  bool isConnected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeState();
+  }
+
+  void initializeState() async {
+    W3MChainPresets.chains.putIfAbsent(_chainId, () => _sepoliaChain);
+    _w3mService = W3MService(
+        projectId: '1509f0d2823f62aef35bb27b39c0f620',
+        metadata: const PairingMetadata(
+          name: 'Web3Modal Flutter Example',
+          description: 'Web3Modal Flutter Example',
+          url: 'https://web3modal.com /',
+          icons: ['https://walletconnect.com/walletconnect-logo.png'],
+          redirect: Redirect(
+            native: 'web3modalflutter://',
+            universal: 'https://web3modal.com',
+          ),
+        ),
+        includedWalletIds: includedWalletIds);
+
+    _w3mService.onModalConnect.subscribe(_onModalConnect);
+    _w3mService.onModalDisconnect.subscribe(_onModalDisconnect);
+
+    await _w3mService.init();
+
+    setState(() {
+      isConnected = _w3mService.isConnected;
+    });
+  }
+
+  @override
+  void dispose() {
+    _w3mService.onModalConnect.unsubscribe(_onModalConnect);
+    _w3mService.onModalDisconnect.unsubscribe(_onModalDisconnect);
+
+    super.dispose();
+  }
+
+  void _onModalConnect(ModalConnect? event) {
+    debugPrint('[MultiprovaWallet] _onModalConnect ${event?.toString()}');
+    debugPrint(
+      '[MultiprovaWallet] _onModalConnect selectedChain ${_w3mService.selectedChain?.chainId}',
+    );
+    debugPrint(
+      '[MultiprovaWallet] _onModalConnect address ${_w3mService.session!.address}',
+    );
+    setState(() {
+      isConnected = _w3mService.isConnected;
+    }); 
+  }
+
+  void _onModalDisconnect(ModalDisconnect? event) {
+    debugPrint('[MultiprovaWallet] _onModalDisconnect ${event?.toString()}');
+    setState(() {
+      isConnected = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,25 +111,37 @@ class Login extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Button(
-                  label: 'Login com MetaMask',
-                  icon: Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Image.asset(
+                W3MConnectWalletButton(
+                  service: _w3mService,
+                  context: context,
+                  custom: Button(
+                    label: !isConnected ? 'Login com MetaMask' : 'Desconectar',
+                    icon: Image.asset(
                       'assets/metamask_logo.png',
                       height: 24.0,
                       width: 24.0,
                       fit: BoxFit.cover,
                     ),
+                    onPressed: () { 
+                      _w3mService.openModal(context);
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  },
                 ),
+                Visibility(
+                  visible: isConnected,
+                  child: Button(
+                    label: 'Acessar MultiprovaWallet',
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Home()),
+                      );
+                    },
+                  ),
+                )
+                // W3MNetworkSelectButton(service: _w3mService, context: context),
+                // W3MAccountButton(service: _w3mService),
               ],
             ),
           ),
@@ -70,3 +150,18 @@ class Login extends StatelessWidget {
     );
   }
 }
+
+const _chainId = "11155111";
+
+final _sepoliaChain = W3MChainInfo(
+    chainName: "Sepolia",
+    chainId: _chainId,
+    namespace: "eip155:$_chainId",
+    tokenName: 'ETH',
+    rpcUrl: 'https://sepolia.infura.io/v3/',
+    blockExplorer: W3MBlockExplorer(
+        name: 'Sepolia Explorer', url: "https://sepolia.etherscan.io"));
+
+final Set<String> includedWalletIds = {
+  'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
+};
