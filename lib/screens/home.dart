@@ -47,6 +47,8 @@ class _HomeState extends State<Home> {
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            softWrap: true,
           ),
         ],
       ),
@@ -132,13 +134,15 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
             child: Text('Bombas', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              getBombCard(2, 'Múltipla Escolha'),
-              getBombCard(3, 'Assoc. Colunas'),
-              getBombCard(3, 'V ou F'),
-            ],
+          IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                getBombCard(2, 'Múltipla Escolha'),
+                getBombCard(3, 'Associação de Colunas'),
+                getBombCard(3, 'V ou F'),
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),

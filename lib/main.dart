@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multiprova_wallet/models/theme.dart';
 import 'package:multiprova_wallet/screens/login.dart';
-import 'package:multiprova_wallet/screens/home.dart';
-import 'package:multiprova_wallet/screens/store.dart';
 import 'package:provider/provider.dart';
 
 void main() {

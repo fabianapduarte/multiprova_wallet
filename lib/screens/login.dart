@@ -6,7 +6,8 @@ import 'package:multiprova_wallet/widgets/logo.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
@@ -65,7 +66,7 @@ class _LoginState extends State<Login> {
     );
     setState(() {
       isConnected = _w3mService.isConnected;
-    }); 
+    });
   }
 
   void _onModalDisconnect(ModalDisconnect? event) {
@@ -116,32 +117,36 @@ class _LoginState extends State<Login> {
                   context: context,
                   custom: Button(
                     label: !isConnected ? 'Login com MetaMask' : 'Desconectar',
-                    icon: Image.asset(
-                      'assets/metamask_logo.png',
-                      height: 24.0,
-                      width: 24.0,
-                      fit: BoxFit.cover,
+                    icon: Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Image.asset(
+                        'assets/metamask_logo.png',
+                        height: 24.0,
+                        width: 24.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    onPressed: () { 
+                    onPressed: () {
                       _w3mService.openModal(context);
                     },
                   ),
                 ),
                 Visibility(
                   visible: isConnected,
-                  child: Button(
-                    label: 'Acessar MultiprovaWallet',
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Home()),
-                      );
-                    },
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Button(
+                      label: 'Acessar MultiprovaWallet',
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Home()),
+                        );
+                      },
+                    ),
                   ),
-                )
-                // W3MNetworkSelectButton(service: _w3mService, context: context),
-                // W3MAccountButton(service: _w3mService),
+                ),
               ],
             ),
           ),
@@ -159,8 +164,7 @@ final _sepoliaChain = W3MChainInfo(
     namespace: "eip155:$_chainId",
     tokenName: 'ETH',
     rpcUrl: 'https://sepolia.infura.io/v3/',
-    blockExplorer: W3MBlockExplorer(
-        name: 'Sepolia Explorer', url: "https://sepolia.etherscan.io"));
+    blockExplorer: W3MBlockExplorer(name: 'Sepolia Explorer', url: "https://sepolia.etherscan.io"));
 
 final Set<String> includedWalletIds = {
   'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
