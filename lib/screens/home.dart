@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/screens/send.dart';
+import 'package:multiprova_wallet/screens/swap.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
 import 'package:multiprova_wallet/widgets/button_home.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
@@ -183,7 +184,13 @@ class _HomeState extends State<Home> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const Send()));
                 },
               ),
-              ButtonHome(label: 'Swap', srcIcon: 'icon_swap.png', onPressed: () {}),
+              ButtonHome(
+                label: 'Swap',
+                srcIcon: 'icon_swap.png',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Swap()));
+                },
+              ),
               ButtonHome(
                 label: 'Como ganhar',
                 srcIcon: 'icon_how_earn.png',

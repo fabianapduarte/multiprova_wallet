@@ -3,6 +3,7 @@ import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/screens/history.dart';
 import 'package:multiprova_wallet/screens/home.dart';
 import 'package:multiprova_wallet/screens/store.dart';
+import 'package:multiprova_wallet/screens/swap.dart';
 
 class NavigationBottomBar extends StatelessWidget {
   const NavigationBottomBar({super.key, required this.screenActive});
@@ -57,7 +58,7 @@ class NavigationBottomBar extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(right: 16.0),
-                child: getNavigationButton(context, NavigationBarActions.swap, Icons.swap_horiz_rounded, const Home()),
+                child: getNavigationButton(context, NavigationBarActions.swap, Icons.swap_horiz_rounded, const Swap()),
               ),
               getNavigationButton(context, NavigationBarActions.history, Icons.history_rounded, const History()),
             ],
