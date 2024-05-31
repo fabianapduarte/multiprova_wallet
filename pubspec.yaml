@@ -65,6 +65,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/illustration_login.svg
+    - assets/illustration_send.svg
     - assets/metamask_logo.png
     - assets/icon_receive.png
     - assets/icon_send.png

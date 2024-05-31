@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
+import 'package:multiprova_wallet/widgets/container_icon.dart';
 
 class HistoryCard extends StatelessWidget {
   const HistoryCard({super.key, required this.date, required this.icon, required this.info, required this.title});
@@ -17,17 +17,7 @@ class HistoryCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 12.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                color: Theme.of(context).colorScheme.surface,
-              ),
-              padding: EdgeInsets.all(12.0),
-              child: Icon(
-                icon,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
+            child: ContainerIcon(padding: 12.0, icon: icon),
           ),
           Expanded(
             child: Column(

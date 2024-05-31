@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
+import 'package:multiprova_wallet/screens/send.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
 import 'package:multiprova_wallet/widgets/button_home.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
+import 'package:multiprova_wallet/widgets/container_icon.dart';
 import 'package:multiprova_wallet/widgets/display.dart';
 import 'package:multiprova_wallet/widgets/card.dart';
 import 'package:multiprova_wallet/widgets/logo.dart';
@@ -65,17 +67,7 @@ class _HomeState extends State<Home> {
         width: double.maxFinite,
         body: Row(
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                color: Theme.of(context).colorScheme.surface,
-              ),
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.paid,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
+            ContainerIcon(padding: 8.0, icon: Icons.paid),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
@@ -184,7 +176,13 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              ButtonHome(label: 'Enviar', srcIcon: 'icon_send.png', onPressed: () {}),
+              ButtonHome(
+                label: 'Enviar',
+                srcIcon: 'icon_send.png',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Send()));
+                },
+              ),
               ButtonHome(label: 'Swap', srcIcon: 'icon_swap.png', onPressed: () {}),
               ButtonHome(
                 label: 'Como ganhar',

@@ -14,7 +14,7 @@ class Button extends StatelessWidget {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0),
           )),
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12.0)),
+          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16.0)),
           backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary)),
       onPressed: onPressed,
       child: Row(
