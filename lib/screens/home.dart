@@ -148,8 +148,11 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
             child: Text('Ações', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            direction: Axis.horizontal,
+            spacing: 10,
+            runSpacing: 10,
             children: <Widget>[
               ButtonHome(
                 label: 'Receber',
@@ -182,34 +185,26 @@ class _HomeState extends State<Home> {
                 ),
               ),
               ButtonHome(label: 'Enviar', srcIcon: 'icon_send.png', onPressed: () {}),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                ButtonHome(label: 'Swap', srcIcon: 'icon_swap.png', onPressed: () {}),
-                ButtonHome(
-                  label: 'Como ganhar',
-                  srcIcon: 'icon_how_earn.png',
-                  onPressed: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => Modal(
-                      title: 'Como ganhar',
-                      textBody:
-                          'Responda questões corretamente em provas feitas exclusivamente no Multiprova e consiga MultiprovaTokens. Troque seus MultiprovaTokens por MultiprovaCoin e utilize como achar melhor.\n\nObs.: Seu professor DEVE ativar essa funcionalidade para que seja possível receber os tokens.',
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-                        )
-                      ],
-                    ),
+              ButtonHome(label: 'Swap', srcIcon: 'icon_swap.png', onPressed: () {}),
+              ButtonHome(
+                label: 'Como ganhar',
+                srcIcon: 'icon_how_earn.png',
+                onPressed: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => Modal(
+                    title: 'Como ganhar',
+                    textBody:
+                        'Responda questões corretamente em provas feitas exclusivamente no Multiprova e consiga MultiprovaTokens. Troque seus MultiprovaTokens por MultiprovaCoin e utilize como achar melhor.\n\nObs.: Seu professor DEVE ativar essa funcionalidade para que seja possível receber os tokens.',
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                      )
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),

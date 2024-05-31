@@ -37,11 +37,12 @@ class Store extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(right: 10.0),
-                  child: Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  )),
+                padding: EdgeInsets.only(right: 10.0),
+                child: Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
               Expanded(
                 child: Text(
                   productName,
