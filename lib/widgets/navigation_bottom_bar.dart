@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
+import 'package:multiprova_wallet/screens/history.dart';
 import 'package:multiprova_wallet/screens/home.dart';
 import 'package:multiprova_wallet/screens/store.dart';
 
@@ -14,6 +15,21 @@ class NavigationBottomBar extends StatelessWidget {
     } else {
       return Theme.of(context).colorScheme.onSurface;
     }
+  }
+
+  Widget getNavigationButton(BuildContext context, NavigationBarActions action, IconData icon, Widget page) {
+    return IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
+      icon: Icon(icon),
+      color: iconColor(context, screenActive == action),
+      iconSize: 28.0,
+    );
   }
 
   @override
@@ -33,49 +49,17 @@ class NavigationBottomBar extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: 16.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  },
-                  icon: Icon(Icons.home_rounded),
-                  color: iconColor(context, screenActive == NavigationBarActions.home),
-                  iconSize: 28.0,
-                ),
+                child: getNavigationButton(context, NavigationBarActions.home, Icons.home_rounded, const Home()),
               ),
               Padding(
                 padding: EdgeInsets.only(right: 16.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Store()),
-                    );
-                  },
-                  icon: Icon(Icons.store_rounded),
-                  color: iconColor(context, screenActive == NavigationBarActions.store),
-                  iconSize: 28.0,
-                ),
+                child: getNavigationButton(context, NavigationBarActions.store, Icons.store_rounded, const Store()),
               ),
               Padding(
                 padding: EdgeInsets.only(right: 16.0),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.swap_horiz_rounded),
-                  color: iconColor(context, screenActive == NavigationBarActions.swap),
-                  iconSize: 28.0,
-                ),
+                child: getNavigationButton(context, NavigationBarActions.swap, Icons.swap_horiz_rounded, const Home()),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.history_rounded),
-                color: iconColor(context, screenActive == NavigationBarActions.history),
-                iconSize: 28.0,
-              ),
+              getNavigationButton(context, NavigationBarActions.history, Icons.history_rounded, const History()),
             ],
           ),
         ),
