@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:multiprova_wallet/screens/home.dart';
+import 'package:multiprova_wallet/utils/colors.dart';
 import 'package:multiprova_wallet/widgets/button.dart';
 import 'package:multiprova_wallet/widgets/logo.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
@@ -121,8 +122,8 @@ class _LoginState extends State<Login> {
                       padding: EdgeInsets.only(right: 8.0),
                       child: Image.asset(
                         'assets/metamask_logo.png',
-                        height: 24.0,
-                        width: 24.0,
+                        height: 20.0,
+                        width: 20.0,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -136,6 +137,10 @@ class _LoginState extends State<Login> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 8),
                     child: Button(
+                      icon: Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Icon(Icons.login_rounded, color: white, size: 16.0),
+                      ),
                       label: 'Acessar MultiprovaWallet',
                       onPressed: () {
                         Navigator.pop(context);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/enums/product_type.dart';
+import 'package:multiprova_wallet/utils/colors.dart';
 import 'package:multiprova_wallet/widgets/button.dart';
 import 'package:multiprova_wallet/widgets/card.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
@@ -62,7 +63,7 @@ class Store extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
+            padding: EdgeInsets.only(top: 8.0, bottom: 12.0),
             child: Text(
               description,
               style: Theme.of(context).textTheme.bodyMedium,
@@ -74,6 +75,10 @@ class Store extends StatelessWidget {
             children: <Widget>[
               Button(
                 label: 'Comprar',
+                icon: Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.shopping_cart_rounded, color: white, size: 16.0),
+                ),
                 onPressed: () => showDialog<Widget>(
                   context: context,
                   builder: (BuildContext context) => Modal(
