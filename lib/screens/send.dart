@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:multiprova_wallet/enums/currency.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
@@ -81,7 +82,10 @@ class _SendState extends State<Send> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headlineSmall,
                         maxLines: 1,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[,]{0,1}[0-9]*')),
+                        ],
                       ),
                     ),
                   ],
