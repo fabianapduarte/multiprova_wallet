@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:multiprova_wallet/enums/currency.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
+import 'package:multiprova_wallet/utils/convert_currency.dart';
 import 'package:multiprova_wallet/widgets/button.dart';
 import 'package:multiprova_wallet/widgets/card_outlined.dart';
 import 'package:multiprova_wallet/widgets/container_icon.dart';
@@ -19,6 +21,7 @@ class Swap extends StatefulWidget {
 class _SwapState extends State<Swap> {
   Currency _inputCurrency = Currency.multiprovaToken;
   Currency _outputCurrency = Currency.multiprovaCoin;
+  final double tokenInCoin = 0.5;
   final _inputCurrencyController = TextEditingController(text: '0');
   final _outputCurrencyController = TextEditingController(text: '0');
 
@@ -27,6 +30,37 @@ class _SwapState extends State<Swap> {
     _inputCurrencyController.dispose();
     _outputCurrencyController.dispose();
     super.dispose();
+  }
+
+  Widget getCurrencyInput(Currency currency, TextEditingController controller, Function(String) onChanged) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        ContainerIcon(padding: 8.0, icon: Icons.paid),
+        Padding(
+          padding: EdgeInsets.only(left: 12.0),
+          child: Text(currency.name, style: Theme.of(context).textTheme.titleSmall),
+        ),
+        Spacer(),
+        SizedBox(
+          width: 80,
+          child: TextField(
+            controller: controller,
+            onChanged: onChanged,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(bottom: 8.0, top: 0.0),
+            ),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineSmall,
+            maxLines: 1,
+            keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[,]{0,1}[0-9]*')),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -43,29 +77,13 @@ class _SwapState extends State<Swap> {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text('De', style: Theme.of(context).textTheme.bodyMedium),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ContainerIcon(padding: 8.0, icon: Icons.paid),
-                    Padding(
-                      padding: EdgeInsets.only(left: 12.0),
-                      child: Text(_inputCurrency.name, style: Theme.of(context).textTheme.titleSmall),
-                    ),
-                    Spacer(),
-                    SizedBox(
-                      width: 80,
-                      child: TextField(
-                        controller: _inputCurrencyController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 8.0, top: 0.0),
-                        ),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                        maxLines: 1,
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                  ],
+                getCurrencyInput(
+                  _inputCurrency,
+                  _inputCurrencyController,
+                  (String? text) {
+                    bool isToken = _inputCurrency == Currency.multiprovaToken;
+                    _outputCurrencyController.text = convertCurrency(text, isToken ? tokenInCoin : 1 / tokenInCoin);
+                  },
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -77,6 +95,12 @@ class _SwapState extends State<Swap> {
                       FloatingActionButton(
                         onPressed: () {
                           setState(() {
+                            String oldInput = _inputCurrencyController.text;
+                            String oldOutput = _outputCurrencyController.text;
+
+                            _inputCurrencyController.text = oldOutput;
+                            _outputCurrencyController.text = oldInput;
+
                             if (_inputCurrency == Currency.multiprovaCoin) {
                               _inputCurrency = Currency.multiprovaToken;
                               _outputCurrency = Currency.multiprovaCoin;
@@ -100,29 +124,13 @@ class _SwapState extends State<Swap> {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text('Para', style: Theme.of(context).textTheme.bodyMedium),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    ContainerIcon(padding: 8.0, icon: Icons.paid),
-                    Padding(
-                      padding: EdgeInsets.only(left: 12.0),
-                      child: Text(_outputCurrency.name, style: Theme.of(context).textTheme.titleSmall),
-                    ),
-                    Spacer(),
-                    SizedBox(
-                      width: 80,
-                      child: TextField(
-                        controller: _outputCurrencyController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 8.0, top: 0.0),
-                        ),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                        maxLines: 1,
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                  ],
+                getCurrencyInput(
+                  _outputCurrency,
+                  _outputCurrencyController,
+                  (String? text) {
+                    bool isToken = _outputCurrency == Currency.multiprovaToken;
+                    _inputCurrencyController.text = convertCurrency(text, isToken ? tokenInCoin : 1 / tokenInCoin);
+                  },
                 ),
               ],
             ),
@@ -134,7 +142,7 @@ class _SwapState extends State<Swap> {
               Padding(
                 padding: EdgeInsets.only(top: 24.0, bottom: 24.0),
                 child: Text(
-                  '1 MultiprovaToken = 0,5 MultiprovaCoin',
+                  '1 MultiprovaToken = ${tokenInCoin.toStringAsFixed(2).replaceAll('.', ',')} MultiprovaCoin',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
