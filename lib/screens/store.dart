@@ -38,7 +38,7 @@ class Store extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 10.0),
+                padding: const EdgeInsets.only(right: 10.0),
                 child: Icon(
                   icon,
                   color: Theme.of(context).colorScheme.onSurface,
@@ -63,7 +63,7 @@ class Store extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8.0, bottom: 12.0),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
             child: Text(
               description,
               style: Theme.of(context).textTheme.bodyMedium,
@@ -75,7 +75,7 @@ class Store extends StatelessWidget {
             children: <Widget>[
               Button(
                 label: 'Comprar',
-                icon: Padding(
+                icon: const Padding(
                   padding: EdgeInsets.only(right: 8.0),
                   child: Icon(Icons.shopping_cart_rounded, color: white, size: 16.0),
                 ),
@@ -92,7 +92,7 @@ class Store extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           ScaffoldMessenger.of(context)
-                              .showSnackBar(Snackbar(text: 'Compra realizada com sucesso').build(context));
+                              .showSnackBar(const Snackbar(text: 'Compra realizada com sucesso').build(context));
                           Navigator.pop(context);
                         },
                         child: Text('Comprar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
@@ -118,14 +118,14 @@ class Store extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 16.0),
+            padding: const EdgeInsets.only(bottom: 16.0),
             child: CardFilled(
               width: double.maxFinite,
               body: Row(
                 children: <Widget>[
                   Icon(Icons.paid, color: Theme.of(context).colorScheme.onPrimary, size: 50.0),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

@@ -33,14 +33,14 @@ class Display extends StatelessWidget {
                 onPressed: () {
                   theme.handleTheme(ThemeMode.light);
                 },
-                icon: Icon(Icons.light_mode_outlined),
+                icon: const Icon(Icons.light_mode_outlined),
               );
             } else {
               return IconButton(
                 onPressed: () {
                   theme.handleTheme(ThemeMode.dark);
                 },
-                icon: Icon(Icons.dark_mode_outlined),
+                icon: const Icon(Icons.dark_mode_outlined),
               );
             }
           }),
@@ -52,7 +52,7 @@ class Display extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const Login()),
               );
             },
-            icon: Icon(Icons.logout_outlined),
+            icon: const Icon(Icons.logout_outlined),
           ),
         ],
         forceMaterialTransparency: true,
@@ -60,7 +60,7 @@ class Display extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 88.0),
+          padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 88.0),
           child: body,
         ),
       ),

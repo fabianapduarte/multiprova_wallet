@@ -44,9 +44,9 @@ class _SendState extends State<Send> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    ContainerIcon(padding: 8.0, icon: Icons.paid),
+                    const ContainerIcon(padding: 8.0, icon: Icons.paid),
                     Padding(
-                      padding: EdgeInsets.only(left: 12.0),
+                      padding: const EdgeInsets.only(left: 12.0),
                       child: Text(currencySelectedName, style: Theme.of(context).textTheme.bodyMedium),
                     ),
                     MenuAnchor(
@@ -71,18 +71,18 @@ class _SendState extends State<Send> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     SizedBox(
                       width: 80,
                       child: TextField(
                         controller: _valueController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: 8.0, top: 0.0),
                         ),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headlineSmall,
                         maxLines: 1,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[,]{0,1}[0-9]*')),
                         ],
@@ -91,11 +91,11 @@ class _SendState extends State<Send> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(right: 12.0),
                         child: ContainerIcon(padding: 8.0, icon: Icons.link_rounded),
                       ),
@@ -105,7 +105,7 @@ class _SendState extends State<Send> {
                           decoration: InputDecoration(
                             labelText: 'Endereço',
                             labelStyle: Theme.of(context).textTheme.bodyMedium,
-                            contentPadding: EdgeInsets.only(bottom: 8.0, top: 0),
+                            contentPadding: const EdgeInsets.only(bottom: 8.0, top: 0),
                           ),
                           textAlign: TextAlign.left,
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -121,13 +121,13 @@ class _SendState extends State<Send> {
             width: double.maxFinite,
           ),
           Padding(
-            padding: EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Button(
                   label: 'Enviar',
-                  icon: Padding(
+                  icon: const Padding(
                     padding: EdgeInsets.only(right: 8.0),
                     child: Icon(Icons.send_rounded, color: white, size: 16.0),
                   ),
@@ -145,7 +145,7 @@ class _SendState extends State<Send> {
                         TextButton(
                           onPressed: () {
                             ScaffoldMessenger.of(context)
-                                .showSnackBar(Snackbar(text: 'Envio realizado com sucesso').build(context));
+                                .showSnackBar(const Snackbar(text: 'Envio realizado com sucesso').build(context));
                             Navigator.pop(context);
                           },
                           child: Text('Enviar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
@@ -158,7 +158,7 @@ class _SendState extends State<Send> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 64.0, bottom: 16.0),
+            padding: const EdgeInsets.only(top: 64.0, bottom: 16.0),
             child: SvgPicture.asset(
               "assets/illustration_send.svg",
               height: 191.91,

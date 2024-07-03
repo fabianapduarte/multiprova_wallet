@@ -16,7 +16,7 @@ class HistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 12.0),
+            padding: const EdgeInsets.only(right: 12.0),
             child: ContainerIcon(padding: 12.0, icon: icon),
           ),
           Expanded(
@@ -29,7 +29,7 @@ class HistoryCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 12.0),
+            padding: const EdgeInsets.only(left: 12.0),
             child: Text(date, style: Theme.of(context).textTheme.bodySmall),
           ),
         ],
@@ -95,7 +95,7 @@ class SwapHistoryCard extends StatelessWidget {
       info: Row(
         children: [
           Text(from, style: Theme.of(context).textTheme.bodyMedium),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 5.0), child: Icon(Icons.arrow_right_alt_rounded)),
+          const Padding(padding: EdgeInsets.symmetric(horizontal: 5.0), child: Icon(Icons.arrow_right_alt_rounded)),
           Text(to, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),

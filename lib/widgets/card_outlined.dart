@@ -9,14 +9,14 @@ class CardOutlined extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card.outlined(
-      margin: EdgeInsets.all(0),
+      margin: const EdgeInsets.all(0),
       color: Theme.of(context).colorScheme.background,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
         side: BorderSide(color: Theme.of(context).colorScheme.outline),
       ),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SizedBox(
           width: width,
           child: body,

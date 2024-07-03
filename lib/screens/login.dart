@@ -81,12 +81,12 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(48.0),
+        padding: const EdgeInsets.all(48.0),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 32.0),
                   child: Logo(
                     alignment: MainAxisAlignment.center,
@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 32.0),
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
                   child: SvgPicture.asset(
                     "assets/illustration_login.svg",
                     height: 213.18,
@@ -119,7 +119,7 @@ class _LoginState extends State<Login> {
                   custom: Button(
                     label: !isConnected ? 'Login com MetaMask' : 'Desconectar',
                     icon: Padding(
-                      padding: EdgeInsets.only(right: 8.0),
+                      padding: const EdgeInsets.only(right: 8.0),
                       child: Image.asset(
                         'assets/metamask_logo.png',
                         height: 20.0,
@@ -135,9 +135,9 @@ class _LoginState extends State<Login> {
                 Visibility(
                   visible: isConnected,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 8),
                     child: Button(
-                      icon: Padding(
+                      icon: const Padding(
                         padding: EdgeInsets.only(right: 8.0),
                         child: Icon(Icons.login_rounded, color: white, size: 16.0),
                       ),

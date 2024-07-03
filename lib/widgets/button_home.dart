@@ -16,7 +16,7 @@ class ButtonHome extends StatelessWidget {
             borderRadius: BorderRadius.circular(4.0),
           ),
         ),
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16.0)),
+        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16.0)),
         backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary),
       ),
       onPressed: onPressed,
@@ -24,12 +24,12 @@ class ButtonHome extends StatelessWidget {
         width: (MediaQuery.sizeOf(context).width / 2) - 53.0,
         height: 80.0,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 12),
+                padding: const EdgeInsets.only(right: 12),
                 child: Image.asset(
                   'assets/$srcIcon',
                   height: 40.0,

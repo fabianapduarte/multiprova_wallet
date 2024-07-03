@@ -14,7 +14,7 @@ class ThemeModel extends ChangeNotifier {
   ThemeData lightThemeData(BuildContext context) {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: blue,
         onPrimary: blue,
         background: white,
@@ -25,7 +25,7 @@ class ThemeModel extends ChangeNotifier {
         onSurface: gray,
       ),
       dialogBackgroundColor: white,
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         bodyLarge: TextStyle(fontSize: 18, color: gray),
         bodyMedium: TextStyle(fontSize: 16, color: gray),
         bodySmall: TextStyle(fontSize: 14, color: gray),
@@ -43,7 +43,7 @@ class ThemeModel extends ChangeNotifier {
   ThemeData darkThemeData(BuildContext context) {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: blueDark,
         onPrimary: white,
         background: black,
@@ -54,7 +54,7 @@ class ThemeModel extends ChangeNotifier {
         onSurface: white,
       ),
       dialogBackgroundColor: grayDark,
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         bodyLarge: TextStyle(fontSize: 18, color: white),
         bodyMedium: TextStyle(fontSize: 16, color: white),
         bodySmall: TextStyle(fontSize: 14, color: white),
