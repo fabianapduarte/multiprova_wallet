@@ -63,7 +63,7 @@ class ShoppingHistoryCard extends StatelessWidget {
   const ShoppingHistoryCard({super.key, required this.date, required this.coins, required this.item});
 
   final String date, item;
-  final int coins;
+  final String coins;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class ShoppingHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(item, style: Theme.of(context).textTheme.bodyMedium, overflow: TextOverflow.ellipsis),
-          Text('MC $coins', style: Theme.of(context).textTheme.bodyMedium)
+          Text(coins, style: Theme.of(context).textTheme.bodyMedium)
         ],
       ),
       title: 'Compra na loja',

@@ -1,0 +1,144 @@
+[
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "aluno_address",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "qtd_tokens",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct MultiprovaTokenUtility.Aluno_distribute_object[]",
+				"name": "lista_alunos",
+				"type": "tuple[]"
+			}
+		],
+		"name": "distribuir_tokens",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "docente_address",
+				"type": "address"
+			}
+		],
+		"name": "permitir_docente",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "data",
+				"type": "string"
+			}
+		],
+		"name": "set_historico",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "quantity_MuCoin",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity_MuTK",
+				"type": "uint256"
+			}
+		],
+		"name": "swap_MuCoin_to_MuTK",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "quantity_MuTK",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity_MuCoin",
+				"type": "uint256"
+			}
+		],
+		"name": "swap_MuTK_to_MuCoin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "tipo",
+				"type": "string"
+			}
+		],
+		"name": "swapEfetuado",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"name": "tokens_distribuidos",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user_address",
+				"type": "address"
+			}
+		],
+		"name": "get_historico_by_address",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

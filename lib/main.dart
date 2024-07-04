@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:multiprova_wallet/models/theme.dart';
+import 'package:multiprova_wallet/models/w3m_service.dart';
 import 'package:multiprova_wallet/screens/login.dart';
 import 'package:provider/provider.dart';
 
+// void main() {
+//   runApp(ChangeNotifierProvider(
+//     create: (context) => ThemeModel(),
+//     child: const MultiprovaWallet(),
+//   ));
+// }
+
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => ThemeModel(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => ThemeModel()),
+      ChangeNotifierProvider(create: (context) => W3mServiceModel()),
+    ],
     child: const MultiprovaWallet(),
   ));
 }

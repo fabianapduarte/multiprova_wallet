@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:multiprova_wallet/models/w3m_service.dart';
 import 'package:multiprova_wallet/screens/home.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
-import 'package:multiprova_wallet/widgets/button.dart';
+import 'package:multiprova_wallet/widgets/button.dart'; 
 import 'package:multiprova_wallet/widgets/logo.dart';
+import 'package:provider/provider.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class Login extends StatefulWidget {
@@ -14,66 +16,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  late W3MService _w3mService;
-  bool isConnected = false;
-
   @override
   void initState() {
     super.initState();
-    initializeState();
-  }
-
-  void initializeState() async {
-    W3MChainPresets.chains.putIfAbsent(_chainId, () => _sepoliaChain);
-    _w3mService = W3MService(
-        projectId: '1509f0d2823f62aef35bb27b39c0f620',
-        metadata: const PairingMetadata(
-          name: 'Web3Modal Flutter Example',
-          description: 'Web3Modal Flutter Example',
-          url: 'https://web3modal.com /',
-          icons: ['https://walletconnect.com/walletconnect-logo.png'],
-          redirect: Redirect(
-            native: 'web3modalflutter://',
-            universal: 'https://web3modal.com',
-          ),
-        ),
-        includedWalletIds: includedWalletIds);
-
-    _w3mService.onModalConnect.subscribe(_onModalConnect);
-    _w3mService.onModalDisconnect.subscribe(_onModalDisconnect);
-
-    await _w3mService.init();
-
-    setState(() {
-      isConnected = _w3mService.isConnected;
-    });
-  }
-
-  @override
-  void dispose() {
-    _w3mService.onModalConnect.unsubscribe(_onModalConnect);
-    _w3mService.onModalDisconnect.unsubscribe(_onModalDisconnect);
-
-    super.dispose();
-  }
-
-  void _onModalConnect(ModalConnect? event) {
-    debugPrint('[MultiprovaWallet] _onModalConnect ${event?.toString()}');
-    debugPrint(
-      '[MultiprovaWallet] _onModalConnect selectedChain ${_w3mService.selectedChain?.chainId}',
-    );
-    debugPrint(
-      '[MultiprovaWallet] _onModalConnect address ${_w3mService.session!.address}',
-    );
-    setState(() {
-      isConnected = _w3mService.isConnected;
-    });
-  }
-
-  void _onModalDisconnect(ModalDisconnect? event) {
-    debugPrint('[MultiprovaWallet] _onModalDisconnect ${event?.toString()}');
-    setState(() {
-      isConnected = false;
+    Provider.of<W3mServiceModel>(context, listen: false).initializeState();
+    Future.delayed(Duration.zero, () async {
+      final w3mService = Provider.of<W3mServiceModel>(context, listen: false);
+      await w3mService.initializeState();
     });
   }
 
@@ -114,44 +63,49 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 W3MConnectWalletButton(
-                  service: _w3mService,
-                  context: context,
-                  custom: Button(
-                    label: !isConnected ? 'Login com MetaMask' : 'Desconectar',
-                    icon: Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Image.asset(
-                        'assets/metamask_logo.png',
-                        height: 20.0,
-                        width: 20.0,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    onPressed: () {
-                      _w3mService.openModal(context);
-                    },
-                  ),
-                ),
-                Visibility(
-                  visible: isConnected,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Button(
-                      icon: Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.login_rounded, color: white, size: 16.0),
-                      ),
-                      label: 'Acessar MultiprovaWallet',
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Home()),
+                    service: context.read<W3mServiceModel>().w3mService,
+                    context: context,
+                    custom: Consumer<W3mServiceModel>(
+                      builder: (context, values, child) {
+                        return Button(
+                          label: !values.isConnected
+                              ? 'Login com MetaMask'
+                              : 'Desconectar',
+                          icon: Image.asset(
+                            'assets/metamask_logo.png',
+                            height: 24.0,
+                            width: 24.0,
+                            fit: BoxFit.cover,
+                          ),
+                          onPressed: () {
+                            context
+                                .read<W3mServiceModel>()
+                                .w3mService
+                                .openModal(context);
+                          },
                         );
                       },
-                    ),
-                  ),
-                ),
+                    )),
+                Consumer<W3mServiceModel>(
+                  builder: (context, values, child) {
+                    return Visibility(
+                        visible: values.isConnected,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Button(
+                            label: 'Acessar MultiprovaWallet',
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Home()),
+                              );
+                            },
+                          ),
+                        ));
+                  },
+                )
               ],
             ),
           ),
@@ -160,17 +114,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-const _chainId = "11155111";
-
-final _sepoliaChain = W3MChainInfo(
-    chainName: "Sepolia",
-    chainId: _chainId,
-    namespace: "eip155:$_chainId",
-    tokenName: 'ETH',
-    rpcUrl: 'https://sepolia.infura.io/v3/',
-    blockExplorer: W3MBlockExplorer(name: 'Sepolia Explorer', url: "https://sepolia.etherscan.io"));
-
-final Set<String> includedWalletIds = {
-  'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
-};

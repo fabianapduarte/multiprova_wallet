@@ -73,6 +73,10 @@ flutter:
     - assets/icon_send.png
     - assets/icon_swap.png
     - assets/icon_how_earn.png
+    - assets/multiprova_tokenABI.json
+    - assets/multiprova_coinABI.json
+    - assets/multiprova_utilityABI.json
+
 
 flutter_launcher_icons:
   android: true

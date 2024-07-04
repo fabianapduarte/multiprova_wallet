@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
+import 'package:multiprova_wallet/models/w3m_service.dart';
 import 'package:multiprova_wallet/screens/send.dart';
 import 'package:multiprova_wallet/screens/swap.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
@@ -12,6 +15,8 @@ import 'package:multiprova_wallet/widgets/card.dart';
 import 'package:multiprova_wallet/widgets/logo.dart';
 import 'package:multiprova_wallet/widgets/modal.dart';
 import 'package:multiprova_wallet/widgets/snackbar.dart';
+import 'package:provider/provider.dart';
+import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,7 +25,132 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+const addressMultiprovaCoin = "0x231Ecef923294bf9470ABF99C8cD0C2864942A57";
+const addressMultiprovaToken = "0x426740b5AEaA9191F3E33F090b378fA824864E6b";
+const addressMultiprovaUtility = "0x2866Ac194EB9cF3E29c99355D0354655ffb73286";
+const rpcUrl = "https://sepolia.infura.io/v3/your_rpc_id";
+
 class _HomeState extends State<Home> {
+  int multiprovaCoinBalance = 0;
+  int multiprovaTokenBalance = 0;
+  int multiplaEscolhaBombs = 0;
+  int associacaoColunasBombs = 0;
+  int voufBombs = 0;
+  String walletAddress = "";
+
+  @override
+  void initState() {
+    super.initState();
+    callReadFunction();
+  }
+
+  Future<void> getMultiplaEscolhaBombs(
+      DeployedContract contract, String walletWaddress) async {
+    var result = await Provider.of<W3mServiceModel>(context, listen: false)
+        .w3mService
+        .requestReadContract(
+            deployedContract: contract,
+            functionName: 'get_multipla_escolha_bombs',
+            rpcUrl: rpcUrl,
+            parameters: [EthereumAddress.fromHex(walletWaddress)]);
+    setState(() {
+      multiplaEscolhaBombs = int.parse(result[0].toString());
+    });
+  }
+
+  Future<void> getMultiprovaTokenBalance(
+      DeployedContract contract, String walletWaddress) async {
+    var result = await Provider.of<W3mServiceModel>(context, listen: false)
+        .w3mService
+        .requestReadContract(
+            deployedContract: contract,
+            functionName: 'balanceOf',
+            rpcUrl: rpcUrl,
+            parameters: [EthereumAddress.fromHex(walletWaddress)]);
+    setState(() {
+      multiprovaTokenBalance = int.parse(result[0].toString());
+    });
+  }
+
+  Future<void> getMultiprovaCoinBalance(
+      DeployedContract contract, String walletWaddress) async {
+    var result = await Provider.of<W3mServiceModel>(context, listen: false)
+        .w3mService
+        .requestReadContract(
+            deployedContract: contract,
+            functionName: 'balanceOf',
+            rpcUrl: rpcUrl,
+            parameters: [EthereumAddress.fromHex(walletWaddress)]);
+    setState(() {
+      multiprovaCoinBalance = int.parse(result[0].toString());
+    });
+  }
+
+  Future<void> getAssociacaoColunasBombs(
+      DeployedContract contract, String walletWaddress) async {
+    var result = await Provider.of<W3mServiceModel>(context, listen: false)
+        .w3mService
+        .requestReadContract(
+            deployedContract: contract,
+            functionName: 'get_associacao_de_colunas_bombs',
+            rpcUrl: rpcUrl,
+            parameters: [EthereumAddress.fromHex(walletWaddress)]);
+    setState(() {
+      associacaoColunasBombs = int.parse(result[0].toString());
+    });
+  }
+
+  Future<void> getVouFBombs(
+      DeployedContract contract, String walletWaddress) async {
+    var result = await Provider.of<W3mServiceModel>(context, listen: false)
+        .w3mService
+        .requestReadContract(
+            deployedContract: contract,
+            functionName: 'get_v_ou_f_bombs',
+            rpcUrl: rpcUrl,
+            parameters: [EthereumAddress.fromHex(walletWaddress)]);
+    setState(() {
+      voufBombs = int.parse(result[0].toString());
+    });
+  }
+
+  Future<void> callReadFunction() async {
+    final jsonABI =
+        await rootBundle.loadString('assets/multiprova_tokenABI.json');
+    final jsonABICoin =
+        await rootBundle.loadString('assets/multiprova_coinABI.json');
+    try {
+      final deployedContractCoin = DeployedContract(
+        ContractAbi.fromJson(
+          jsonABICoin, // ABI object
+          'multiprova_coin',
+        ),
+        EthereumAddress.fromHex(addressMultiprovaCoin),
+      );
+
+      final deployedContractToken = DeployedContract(
+        ContractAbi.fromJson(
+          jsonABI, // ABI object
+          'multiprova_token',
+        ),
+        EthereumAddress.fromHex(addressMultiprovaToken),
+      );
+
+      walletAddress = Provider.of<W3mServiceModel>(context, listen: false)
+          .w3mService
+          .session!
+          .address!;
+      // Reading values from smart contract
+      await getMultiprovaTokenBalance(deployedContractToken, walletAddress);
+      await getMultiprovaCoinBalance(deployedContractCoin, walletAddress);
+      await getMultiplaEscolhaBombs(deployedContractCoin, walletAddress);
+      await getAssociacaoColunasBombs(deployedContractCoin, walletAddress);
+      await getVouFBombs(deployedContractCoin, walletAddress);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget getInfoCard(int number, String label) {
     return CardFilled(
       width: (MediaQuery.sizeOf(context).width / 2) - 53.0,
@@ -28,7 +158,8 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
-            child: Text('$number', style: Theme.of(context).textTheme.headlineLarge),
+            child: Text('$number',
+                style: Theme.of(context).textTheme.headlineLarge),
           ),
           Text(label, style: Theme.of(context).textTheme.bodyMedium),
         ],
@@ -43,7 +174,8 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
-            child: Text('$number', style: Theme.of(context).textTheme.headlineMedium),
+            child: Text('$number',
+                style: Theme.of(context).textTheme.headlineMedium),
           ),
           Text(
             type,
@@ -58,9 +190,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget getQuotationCard(String currency, double percentage, double realCurrency, String coinCurrency) {
-    final String percentageString = percentage.toStringAsFixed(2).replaceAll('.', ',');
-    final String realCurrencyString = realCurrency.toStringAsFixed(2).replaceAll('.', ',');
+  Widget getQuotationCard(String currency, double percentage,
+      double realCurrency, String coinCurrency) {
+    final String percentageString =
+        percentage.toStringAsFixed(2).replaceAll('.', ',');
+    final String realCurrencyString =
+        realCurrency.toStringAsFixed(2).replaceAll('.', ',');
 
     return Padding(
       padding: EdgeInsets.only(bottom: 8.0),
@@ -93,8 +228,10 @@ class _HomeState extends State<Home> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Text('R\$ $realCurrencyString', style: Theme.of(context).textTheme.bodyMedium),
-                Text(coinCurrency, style: Theme.of(context).textTheme.bodyMedium),
+                Text('R\$ $realCurrencyString',
+                    style: Theme.of(context).textTheme.bodyMedium),
+                Text(coinCurrency,
+                    style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
           ],
@@ -119,27 +256,31 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              getInfoCard(70, 'MultiprovaCoin'),
-              getInfoCard(50, 'MultiprovaToken'),
+              getInfoCard(multiprovaCoinBalance, 'MultiprovaCoin'),
+              getInfoCard(multiprovaTokenBalance, 'MultiprovaToken'),
             ],
           ),
           Padding(
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-            child: Text('Bombas', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
+            child: Text('Bombas',
+                style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.start),
           ),
           IntrinsicHeight(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                getBombCard(2, 'Múltipla Escolha'),
-                getBombCard(3, 'Associação de Colunas'),
-                getBombCard(3, 'V ou F'),
+                getBombCard(multiplaEscolhaBombs, 'Múltipla Escolha'),
+                getBombCard(associacaoColunasBombs, 'Associação de Colunas'),
+                getBombCard(voufBombs, 'V ou F'),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-            child: Text('Ações', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
+            child: Text('Ações',
+                style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.start),
           ),
           Wrap(
             alignment: WrapAlignment.spaceBetween,
@@ -155,23 +296,30 @@ class _HomeState extends State<Home> {
                   builder: (BuildContext context) => Modal(
                     title: 'Receber',
                     textBody:
-                        'Seu endereço:\n0x00b58369796dd223f025315d0a8a8a872517d51d\n\nReceba tokens de outra pessoa através do endereço da sua conta.',
+                        'Seu endereço:\n $walletAddress\n\nReceba tokens de outra pessoa através do endereço da sua conta.',
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                        child: Text('Fechar',
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
                       ),
                       TextButton(
                         onPressed: () async {
                           await Clipboard.setData(
-                            ClipboardData(text: "0x00b58369796dd223f025315d0a8a8a872517d51d"),
+                            ClipboardData(text: walletAddress),
                           ).then((value) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(Snackbar(text: 'Endereço copiado!').build(context));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                Snackbar(text: 'Endereço copiado!')
+                                    .build(context));
                             Navigator.pop(context);
                           });
                         },
-                        child: Text('Compartilhar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                        child: Text('Compartilhar',
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
                       ),
                     ],
                   ),
@@ -181,14 +329,16 @@ class _HomeState extends State<Home> {
                 label: 'Enviar',
                 srcIcon: 'icon_send.png',
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Send()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Send()));
                 },
               ),
               ButtonHome(
                 label: 'Swap',
                 srcIcon: 'icon_swap.png',
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Swap()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Swap()));
                 },
               ),
               ButtonHome(
@@ -203,7 +353,10 @@ class _HomeState extends State<Home> {
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Fechar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                        child: Text('Fechar',
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
                       )
                     ],
                   ),
@@ -213,7 +366,9 @@ class _HomeState extends State<Home> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-            child: Text('Cotação diária', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
+            child: Text('Cotação diária',
+                style: Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.start),
           ),
           Column(
             children: <Widget>[

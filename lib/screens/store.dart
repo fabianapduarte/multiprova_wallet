@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:multiprova_wallet/enums/navigation_bar_actions.dart';
 import 'package:multiprova_wallet/enums/product_type.dart';
+import 'package:multiprova_wallet/models/w3m_service.dart';
+import 'package:multiprova_wallet/screens/home.dart';
 import 'package:multiprova_wallet/utils/colors.dart';
 import 'package:multiprova_wallet/widgets/button.dart';
 import 'package:multiprova_wallet/widgets/card.dart';
@@ -9,9 +12,117 @@ import 'package:multiprova_wallet/widgets/display.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multiprova_wallet/widgets/modal.dart';
 import 'package:multiprova_wallet/widgets/snackbar.dart';
+import 'package:provider/provider.dart';
+import 'package:web3modal_flutter/web3modal_flutter.dart';
+import 'package:http/http.dart';
 
-class Store extends StatelessWidget {
+class Store extends StatefulWidget {
   const Store({super.key});
+
+  @override
+  State<Store> createState() => _StoreState();
+}
+
+class _StoreState extends State<Store> {
+  int multiprovaCoinBalance = 0;
+  String walletAddress = "";
+  late DeployedContract deployedContractCoin;
+  late ContractEvent bombaCompradaEvent;
+  late Web3Client ethClient;
+
+  @override
+  void initState() {
+    super.initState();
+    getMultiprovaCoinBalance();
+  }
+
+  Future<void> getMultiprovaCoinBalance() async {
+    try {
+      final jsonABICoin =
+          await rootBundle.loadString('assets/multiprova_coinABI.json');
+      deployedContractCoin = DeployedContract(
+        ContractAbi.fromJson(
+          jsonABICoin, // ABI object
+          'multiprova_coin',
+        ),
+        EthereumAddress.fromHex(addressMultiprovaCoin),
+      );
+
+      walletAddress = Provider.of<W3mServiceModel>(context, listen: false)
+          .w3mService
+          .session!
+          .address!;
+      var result = await Provider.of<W3mServiceModel>(context, listen: false)
+          .w3mService
+          .requestReadContract(
+              deployedContract: deployedContractCoin,
+              functionName: 'balanceOf',
+              rpcUrl: rpcUrl,
+              parameters: [EthereumAddress.fromHex(walletAddress)]);
+      setState(() {
+        multiprovaCoinBalance = int.parse(result[0].toString());
+      });
+      bombaCompradaEvent = deployedContractCoin.event('bomba_comprada');
+      final Client httpClient = Client();
+      ethClient = Web3Client(rpcUrl, httpClient);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void listenToBombEventExecuted() {
+    final filter = FilterOptions.events(
+      contract: deployedContractCoin,
+      event: bombaCompradaEvent,
+    );
+    ethClient.events(filter).listen((event) {
+      final decoded =
+          bombaCompradaEvent.decodeResults(event.topics!, event.data!);
+      final tipoBomba = decoded[0] as String;
+      ScaffoldMessenger.of(context).showSnackBar(
+          Snackbar(text: 'Bomba $tipoBomba comprada com sucesso')
+              .build(context));
+    });
+  }
+
+  Future<void> callBuyBomb(String functionName, int quantity) async {
+    try {
+      var w3mService =
+          Provider.of<W3mServiceModel>(context, listen: false).w3mService;
+
+      var walletWaddress = w3mService.session!.address!;
+      w3mService.launchConnectedWallet();
+      await w3mService.requestWriteContract(
+          topic: w3mService.session!.topic!,
+          chainId: w3mService.selectedChain!.namespace,
+          deployedContract: deployedContractCoin,
+          functionName: functionName,
+          rpcUrl: rpcUrl,
+          transaction: Transaction(
+            from: EthereumAddress.fromHex(walletWaddress),
+          ),
+          parameters: [BigInt.from(quantity)]);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> buyBombs(String productName) async {
+    String functionName;
+
+    switch (productName) {
+      case "Bomba de múltipla escolha":
+        functionName = "comprar_multipla_escolha_bomb";
+      case "Bomba de V ou F":
+        functionName = "comprar_vouf_bomb";
+      case "Bomba de associação de colunas":
+        functionName = "comprar_associacao_de_colunas_bomb";
+      default:
+        functionName = "";
+    }
+    await callBuyBomb(functionName, 1);
+    listenToBombEventExecuted();
+  }
 
   Widget getCardStore(
     BuildContext context,
@@ -77,25 +188,32 @@ class Store extends StatelessWidget {
                 label: 'Comprar',
                 icon: Padding(
                   padding: EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.shopping_cart_rounded, color: white, size: 16.0),
+                  child: Icon(Icons.shopping_cart_rounded,
+                      color: white, size: 16.0),
                 ),
                 onPressed: () => showDialog<Widget>(
                   context: context,
                   builder: (BuildContext context) => Modal(
                     title: 'Deseja continuar?',
-                    textBody: 'Deseja comprar 1 $productName por MC $priceString?',
+                    textBody:
+                        'Deseja comprar 1 $productName por MC $priceString?',
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Cancelar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                        child: Text('Cancelar',
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
                       ),
                       TextButton(
                         onPressed: () {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(Snackbar(text: 'Compra realizada com sucesso').build(context));
                           Navigator.pop(context);
+                          buyBombs(productName);
                         },
-                        child: Text('Comprar', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                        child: Text('Comprar',
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary)),
                       ),
                     ],
                   ),
@@ -123,14 +241,18 @@ class Store extends StatelessWidget {
               width: double.maxFinite,
               body: Row(
                 children: <Widget>[
-                  Icon(Icons.paid, color: Theme.of(context).colorScheme.onPrimary, size: 50.0),
+                  Icon(Icons.paid,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      size: 50.0),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('Saldo da conta', style: Theme.of(context).textTheme.bodyMedium),
-                        Text('50 MultiprovaCoins', style: Theme.of(context).textTheme.titleMedium),
+                        Text('Saldo da conta',
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        Text('$multiprovaCoinBalance MultiprovaCoins',
+                            style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
                   )
@@ -147,21 +269,21 @@ class Store extends StatelessWidget {
                 context,
                 ProductType.bomb,
                 'Bomba de múltipla escolha',
-                10.0,
+                5.0,
                 'Elimina uma alternativa aleatória errada de uma questão de múltipla escolha. Só pode ser usada uma vez.',
               ),
               getCardStore(
                 context,
                 ProductType.bomb,
                 'Bomba de V ou F',
-                10.0,
+                5.0,
                 'Mostra a reposta de um item aleatório de uma questão de V ou F. Só pode ser usada uma vez.',
               ),
               getCardStore(
                 context,
                 ProductType.bomb,
                 'Bomba de associação de colunas',
-                10.0,
+                5.0,
                 'Mostra a resposta de um item aleatório de uma questão de associação de colunas. Só pode ser usada uma vez.',
               ),
               getCardStore(
