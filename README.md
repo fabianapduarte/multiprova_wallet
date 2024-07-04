@@ -29,13 +29,11 @@ A essência do aplicativo será a gestão e controle de seus tokens, como uma ca
 - [x] Listar itens do usuário
   - [x] MultiprovaCoin (moeda comerciável)
   - [x] MultiprovaToken
-  - [x] Bombas (para usar em questão de múltipla escolha, associação de colunas ou V ou F)
-- [ ] Loja para compra de itens
-  - [ ] Bombas
-  - [ ] Cupom/gift card
-- [ ] Listar histórico de ações do usuário
-- [ ] Swap entre o MultiprovaToken e MultiprovaCoin
-- [ ] Enviar moedas para outro usuário
+  - [x] Bombas (para usar em questões de múltipla escolha, associação de colunas ou V ou F)
+- [x] Loja para compra de itens
+- [x] Listar histórico de ações do usuário
+- [x] Conversão entre o MultiprovaToken e MultiprovaCoin
+- [x] Enviar moedas para outro usuário
 - [x] Mudar tema do aplicativo (claro/escuro)
 - [x] Deslogar
 
@@ -60,7 +58,7 @@ $ cd multiprova_wallet
 # Instale as dependências
 $ flutter pub get
 
-# Execute o aplicativo
+# Execute o aplicativo (ou F5 no VSCode com a extensão do Flutter para debug)
 $ flutter run
 ```
 
@@ -70,6 +68,18 @@ $ flutter run
 
 Clique [aqui](https://www.figma.com/design/GJ0Eagf5jzYRbhMDnIOvBY/App---MultiprovaWallet?t=ROUlFxLAxdwjl2tG-0) para acessar os protótipos desenvolvidos no Figma.
 
+<p style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+  <img src="./.github/login.jpg" width="200px" style="margin-top: 16px" />
+  <img src="./.github/home.jpg" width="200px" style="margin-top: 16px" />
+  <img src="./.github/send.jpg" width="200px" style="margin-top: 16px" />
+</p>
+
+<p style="display: flex; justify-content: space-around;">
+  <img src="./.github/store.jpg" width="200px" style="margin-top: 16px" />
+  <img src="./.github/swap.jpg" width="200px" style="margin-top: 16px" />
+  <img src="./.github/history.jpg" width="200px" style="margin-top: 16px" />
+</p>
+
 ---
 
 ## 🛠 Tecnologias
@@ -78,7 +88,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 - Flutter;
 - Dart;
-- Metamask.
+- MetaMask.
 
 ---
 
