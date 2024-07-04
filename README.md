@@ -68,13 +68,13 @@ $ flutter run
 
 Clique [aqui](https://www.figma.com/design/GJ0Eagf5jzYRbhMDnIOvBY/App---MultiprovaWallet?t=ROUlFxLAxdwjl2tG-0) para acessar os protótipos desenvolvidos no Figma.
 
-<p style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+<p align="center" style="margin-bottom: 8px">
   <img src="./.github/login.jpg" width="200px" style="margin-top: 16px" />
   <img src="./.github/home.jpg" width="200px" style="margin-top: 16px" />
   <img src="./.github/send.jpg" width="200px" style="margin-top: 16px" />
 </p>
 
-<p style="display: flex; justify-content: space-around;">
+<p align="center" style="margin-bottom: 8px">
   <img src="./.github/store.jpg" width="200px" style="margin-top: 16px" />
   <img src="./.github/swap.jpg" width="200px" style="margin-top: 16px" />
   <img src="./.github/history.jpg" width="200px" style="margin-top: 16px" />
