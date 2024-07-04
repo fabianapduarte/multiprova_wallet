@@ -14,7 +14,7 @@ class Logo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 8),
           child: Icon(Icons.wallet_outlined, color: Theme.of(context).colorScheme.primary, size: iconSize),
         ),
         Text(

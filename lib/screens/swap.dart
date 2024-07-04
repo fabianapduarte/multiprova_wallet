@@ -88,7 +88,7 @@ class _SwapState extends State<Swap> {
     ethClient.events(filter).listen((event) {
       // final decoded = swapEvent.decodeResults(event.topics!, event.data!);
       ScaffoldMessenger.of(context).showSnackBar(
-          Snackbar(text: 'Troca realizada com sucesso').build(context));
+          const Snackbar(text: 'Troca realizada com sucesso').build(context));
     });
   }
 
@@ -107,26 +107,24 @@ class _SwapState extends State<Swap> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        ContainerIcon(padding: 8.0, icon: Icons.paid),
+        const ContainerIcon(padding: 8.0, icon: Icons.paid),
         Padding(
-          padding: EdgeInsets.only(left: 12.0),
-          child: Text(currency.name,
-              style: Theme.of(context).textTheme.titleSmall),
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Text(currency.name, style: Theme.of(context).textTheme.titleSmall),
         ),
-        Spacer(),
+        const Spacer(),
         SizedBox(
           width: 80,
           child: TextField(
             controller: controller,
             onChanged: onChanged,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               contentPadding: EdgeInsets.only(bottom: 8.0, top: 0.0),
             ),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall,
             maxLines: 1,
-            keyboardType:
-                TextInputType.numberWithOptions(decimal: true, signed: false),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(
                   RegExp(r'[0-9]+[,]{0,1}[0-9]*')),
@@ -148,9 +146,8 @@ class _SwapState extends State<Swap> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child:
-                      Text('De', style: Theme.of(context).textTheme.bodyMedium),
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text('De', style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 getCurrencyInput(
                   _inputCurrency,
@@ -162,7 +159,7 @@ class _SwapState extends State<Swap> {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Stack(
                     clipBehavior: Clip.none,
                     alignment: Alignment.center,
@@ -201,9 +198,8 @@ class _SwapState extends State<Swap> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child: Text('Para',
-                      style: Theme.of(context).textTheme.bodyMedium),
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text('Para', style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 getCurrencyInput(
                   _outputCurrency,
@@ -222,7 +218,7 @@ class _SwapState extends State<Swap> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 24.0, bottom: 24.0),
+                padding: const EdgeInsets.only(top: 24.0, bottom: 24.0),
                 child: Text(
                   '1 MultiprovaToken = ${tokenInCoin.toStringAsFixed(2).replaceAll('.', ',')} MultiprovaCoin',
                   style: Theme.of(context).textTheme.bodySmall,
@@ -235,7 +231,7 @@ class _SwapState extends State<Swap> {
             children: <Widget>[
               Button(
                 label: 'Trocar',
-                icon: Padding(
+                icon: const Padding(
                   padding: EdgeInsets.only(right: 8.0),
                   child: Icon(Icons.currency_exchange_rounded,
                       color: white, size: 16.0),
@@ -256,11 +252,7 @@ class _SwapState extends State<Swap> {
                       ),
                       TextButton(
                         onPressed: () {
-                          onClickSwap();
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     Snackbar(text: 'Troca realizada com sucesso')
-                          //         .build(context));
-                          // Navigator.pop(context);
+                          onClickSwap(); 
                         },
                         child: Text('Trocar',
                             style: TextStyle(

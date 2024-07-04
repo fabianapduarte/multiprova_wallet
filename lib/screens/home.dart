@@ -157,9 +157,8 @@ class _HomeState extends State<Home> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text('$number',
-                style: Theme.of(context).textTheme.headlineLarge),
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text('$number', style: Theme.of(context).textTheme.headlineLarge),
           ),
           Text(label, style: Theme.of(context).textTheme.bodyMedium),
         ],
@@ -173,9 +172,8 @@ class _HomeState extends State<Home> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text('$number',
-                style: Theme.of(context).textTheme.headlineMedium),
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text('$number', style: Theme.of(context).textTheme.headlineMedium),
           ),
           Text(
             type,
@@ -198,14 +196,14 @@ class _HomeState extends State<Home> {
         realCurrency.toStringAsFixed(2).replaceAll('.', ',');
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: CardOutlined(
         width: double.maxFinite,
         body: Row(
           children: <Widget>[
-            ContainerIcon(padding: 8.0, icon: Icons.paid),
+            const ContainerIcon(padding: 8.0, icon: Icons.paid),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -224,7 +222,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
@@ -245,7 +243,7 @@ class _HomeState extends State<Home> {
     return Display(
       automaticallyImplyLeading: false,
       screenActive: NavigationBarActions.home,
-      title: Logo(
+      title: const Logo(
         alignment: MainAxisAlignment.start,
         fontSize: 22.0,
         iconSize: 26.0,
@@ -261,10 +259,8 @@ class _HomeState extends State<Home> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-            child: Text('Bombas',
-                style: Theme.of(context).textTheme.titleSmall,
-                textAlign: TextAlign.start),
+            padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
+            child: Text('Bombas', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
           ),
           IntrinsicHeight(
             child: Row(
@@ -277,10 +273,8 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-            child: Text('Ações',
-                style: Theme.of(context).textTheme.titleSmall,
-                textAlign: TextAlign.start),
+            padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
+            child: Text('Ações', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
           ),
           Wrap(
             alignment: WrapAlignment.spaceBetween,
@@ -310,9 +304,8 @@ class _HomeState extends State<Home> {
                           await Clipboard.setData(
                             ClipboardData(text: walletAddress),
                           ).then((value) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                Snackbar(text: 'Endereço copiado!')
-                                    .build(context));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const Snackbar(text: 'Endereço copiado!').build(context));
                             Navigator.pop(context);
                           });
                         },
@@ -365,10 +358,8 @@ class _HomeState extends State<Home> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 24.0, bottom: 8.0),
-            child: Text('Cotação diária',
-                style: Theme.of(context).textTheme.titleSmall,
-                textAlign: TextAlign.start),
+            padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
+            child: Text('Cotação diária', style: Theme.of(context).textTheme.titleSmall, textAlign: TextAlign.start),
           ),
           Column(
             children: <Widget>[

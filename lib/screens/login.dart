@@ -30,12 +30,12 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(48.0),
+        padding: const EdgeInsets.all(48.0),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 32.0),
                   child: Logo(
                     alignment: MainAxisAlignment.center,
@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 32.0),
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
                   child: SvgPicture.asset(
                     "assets/illustration_login.svg",
                     height: 213.18,

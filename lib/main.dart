@@ -32,7 +32,8 @@ class MultiprovaWallet extends StatelessWidget {
         themeMode: theme.themeMode,
         theme: theme.lightThemeData(context),
         darkTheme: theme.darkThemeData(context),
-        home: Login(),
+        debugShowCheckedModeBanner: false,
+        home: const Login(),
       );
     });
   }

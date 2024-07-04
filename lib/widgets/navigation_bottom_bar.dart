@@ -39,25 +39,25 @@ class NavigationBottomBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(bottom: 16.0, left: 32.0, right: 32.0),
+          margin: const EdgeInsets.only(bottom: 16.0, left: 32.0, right: 32.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30.0),
             color: Theme.of(context).colorScheme.surface,
           ),
-          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 16.0),
+                padding: const EdgeInsets.only(right: 16.0),
                 child: getNavigationButton(context, NavigationBarActions.home, Icons.home_rounded, const Home()),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 16.0),
+                padding: const EdgeInsets.only(right: 16.0),
                 child: getNavigationButton(context, NavigationBarActions.store, Icons.store_rounded, const Store()),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 16.0),
+                padding: const EdgeInsets.only(right: 16.0),
                 child: getNavigationButton(context, NavigationBarActions.swap, Icons.swap_horiz_rounded, const Swap()),
               ),
               getNavigationButton(context, NavigationBarActions.history, Icons.history_rounded, const History()),
